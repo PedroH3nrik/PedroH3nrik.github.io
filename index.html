@@ -7,250 +7,1248 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #0a0e1a; color: #e2e8f0; }
-        .font-display { font-family: 'Space Grotesk', sans-serif; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0e1a;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+        
+        .font-display {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .bg-gradient-animate {
+            background: linear-gradient(-45deg, #0a0e1a, #1a1f3a, #0f172a, #1e293b);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
         .glass-card {
             background: rgba(30, 41, 59, 0.4);
             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
+        
+        .glass-card:hover {
+            border-color: rgba(59, 130, 246, 0.2);
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+        
+        .custom-input {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .custom-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(34, 197, 94, 0.4);
+        }
+        
+        .btn-ghost {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-ghost:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-card {
+            background: rgba(30, 41, 59, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            background: rgba(30, 41, 59, 0.5);
+            border-color: rgba(59, 130, 246, 0.2);
+        }
+        
         .pnl-positive { color: #22c55e; }
         .pnl-negative { color: #ef4444; }
+        
+        .account-card {
+            background: rgba(30, 41, 59, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .account-card:hover {
+            background: rgba(30, 41, 59, 0.4);
+            border-color: rgba(59, 130, 246, 0.15);
+        }
+        
+        .history-section {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+        
+        .history-section.expanded {
+            max-height: 1000px;
+            opacity: 1;
+        }
+        
+        .expand-btn {
+            transition: transform 0.3s ease;
+        }
+        
+        .expand-btn.rotated {
+            transform: rotate(180deg);
+        }
+        
+        .phase-badge {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .badge-fase1 { background: rgba(234, 179, 8, 0.15); color: #fbbf24; border: 1px solid rgba(234, 179, 8, 0.3); }
+        .badge-fase2 { background: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.3); }
+        .badge-funded { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+        
+        /* Drawdown specific styles */
         .drawdown-safe { color: #22c55e; }
         .drawdown-warning { color: #f59e0b; }
         .drawdown-danger { color: #ef4444; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-        .live-dot { animation: pulse 2s infinite; }
+        
+        .drawdown-bar-bg {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 9999px;
+            height: 6px;
+            overflow: hidden;
+        }
+        
+        .drawdown-bar-fill {
+            height: 100%;
+            border-radius: 9999px;
+            transition: width 0.5s ease, background-color 0.3s ease;
+        }
+        
+        .drawdown-safe-fill { background: linear-gradient(90deg, #22c55e, #4ade80); }
+        .drawdown-warning-fill { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+        .drawdown-danger-fill { background: linear-gradient(90deg, #ef4444, #f87171); }
+        
+        .modal-backdrop {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.4s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .progress-bar {
+            height: 4px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.6s ease;
+        }
+
+        .pulse-dot {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
     </style>
 </head>
 <body class="min-h-screen">
-    
+
     <!-- Background -->
-    <div class="fixed inset-0 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-800 -z-10"></div>
-    
+    <div class="bg-gradient-animate"></div>
+    <div class="grid-overlay"></div>
+
     <!-- Header -->
-    <header class="glass-card sticky top-0 border-b border-white/10">
-        <div class="max-w-6xl mx-auto px-6 py-4">
+    <header class="glass-card sticky top-0 z-50 border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center font-bold text-lg font-display">
                         H&G
                     </div>
                     <div>
-                        <h1 class="text-xl font-bold font-display text-white">H & G Capital</h1>
-                        <div class="flex items-center gap-2 text-xs text-slate-400">
-                            <span class="w-2 h-2 bg-green-500 rounded-full live-dot"></span>
-                            <span id="lastUpdate">Aguardando dados...</span>
+                        <h1 class="text-xl font-bold font-display tracking-tight text-white">H & G Capital</h1>
+                        <div class="flex items-center gap-2">
+                            <span class="live-indicator text-xs text-slate-400">
+                                <span class="live-dot"></span>
+                                <span id="lastUpdate">Atualizado: --:--:--</span>
+                            </span>
+                            <span class="text-xs text-slate-600">|</span>
+                            <span class="text-xs text-slate-500">JSONBin.io</span>
                         </div>
                     </div>
                 </div>
-                <div class="text-right">
-                    <p class="text-xs text-slate-500">Dados em tempo real</p>
-                    <p class="text-xs text-slate-600">JSONBin.io</p>
+                <div class="flex items-center gap-3">
+                    <button onclick="openDrawdownSettings()" class="btn-ghost px-4 py-2 rounded-lg text-sm text-slate-300 flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        Limites Drawdown
+                    </button>
+                    <button onclick="openAddAccountModal()" class="btn-primary px-5 py-2.5 rounded-lg text-sm font-medium flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                        Nova Conta
+                    </button>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Main -->
-    <main class="max-w-6xl mx-auto px-6 py-8">
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-6 py-8">
         
-        <!-- Summary Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-            <div class="glass-card rounded-2xl p-5">
-                <p class="text-xs text-slate-400 uppercase mb-1">Banca Total</p>
-                <h2 class="text-2xl font-bold font-display text-white" id="totalBalance">U$ 0,00</h2>
+        <!-- Summary Stats -->
+        <section class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div class="stat-card rounded-2xl p-5">
+                <p class="text-xs text-slate-400 uppercase tracking-wider mb-1">Banca Funded Total</p>
+                <h2 class="text-2xl font-bold font-display text-white" id="totalFundedBalance">U$ 0,00</h2>
             </div>
-            <div class="glass-card rounded-2xl p-5">
-                <p class="text-xs text-slate-400 uppercase mb-1">Resultado Hoje</p>
-                <h2 class="text-2xl font-bold font-display" id="totalDaily">U$ 0,00</h2>
+            <div class="stat-card rounded-2xl p-5">
+                <p class="text-xs text-slate-400 uppercase tracking-wider mb-1">Resultado Hoje</p>
+                <h2 class="text-2xl font-bold font-display" id="totalDailyPnL">U$ 0,00</h2>
             </div>
-            <div class="glass-card rounded-2xl p-5">
-                <p class="text-xs text-slate-400 uppercase mb-1">Lucro Total</p>
-                <h2 class="text-2xl font-bold font-display pnl-positive" id="totalProfit">U$ 0,00</h2>
+            <div class="stat-card rounded-2xl p-5">
+                <p class="text-xs text-slate-400 uppercase tracking-wider mb-1">Lucro Mês</p>
+                <h2 class="text-2xl font-bold font-display text-green-400" id="totalMonthlyProfit">U$ 0,00</h2>
             </div>
-            <div class="glass-card rounded-2xl p-5 border-l-2 border-yellow-500/50">
-                <p class="text-xs text-slate-400 uppercase mb-1">Drawdown Máx</p>
-                <h2 class="text-2xl font-bold font-display drawdown-safe" id="maxDrawdown">0,00%</h2>
+            <div class="stat-card rounded-2xl p-5 border-l-2 border-l-yellow-500/50">
+                <p class="text-xs text-slate-400 uppercase tracking-wider mb-1">Disponível Saque</p>
+                <h2 class="text-2xl font-bold font-display text-yellow-400" id="totalAvailableWithdraw">U$ 0,00</h2>
+            </div>
+        </section>
+
+        <!-- Drawdown Alert Banner -->
+        <div id="drawdownAlert" class="hidden mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center gap-3">
+            <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            <div>
+                <p class="text-sm font-medium text-red-400">Atenção: Conta próxima do limite de drawdown!</p>
+                <p class="text-xs text-slate-400" id="drawdownAlertText">Verifique a conta imediatamente.</p>
             </div>
         </div>
 
-        <!-- Accounts -->
-        <div id="accountsList" class="space-y-4">
-            <!-- Accounts loaded here -->
+        <!-- Connection Status -->
+        <div id="connectionStatus" class="mb-6 p-4 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <div>
+                    <p class="text-sm font-medium text-blue-400">Aguardando dados do MT5...</p>
+                    <p class="text-xs text-slate-400">Configure o EA no MetaTrader 5 para começar</p>
+                </div>
+            </div>
+            <div class="text-right">
+                <p class="text-xs text-slate-500">Bin ID:</p>
+                <p class="text-xs font-mono text-slate-400">69c560adaa77b81da9219078</p>
+            </div>
         </div>
 
-        <!-- Loading State -->
-        <div id="loading" class="text-center py-16">
-            <div class="w-12 h-12 mx-auto mb-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-            <p class="text-slate-400">Carregando dados do MT5...</p>
+        <!-- Accounts List -->
+        <section id="accountsList" class="space-y-4">
+            <!-- Accounts rendered here -->
+        </section>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="hidden text-center py-16">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-white/5 flex items-center justify-center">
+                <svg class="w-8 h-8 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-1">Nenhuma conta</h3>
+            <p class="text-sm text-slate-500 mb-4">Adicione sua primeira conta para começar</p>
+            <button onclick="openAddAccountModal()" class="btn-primary px-5 py-2 rounded-lg text-sm">
+                Adicionar Conta
+            </button>
         </div>
     </main>
 
+    <!-- Add Account Modal -->
+    <div id="addAccountModal" class="fixed inset-0 z-50 hidden">
+        <div class="modal-backdrop absolute inset-0" onclick="closeAddAccountModal()"></div>
+        <div class="relative min-h-screen flex items-center justify-center p-4">
+            <div class="glass-card w-full max-w-md rounded-2xl p-6 relative z-10">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-bold text-white">Nova Conta</h3>
+                    <button onclick="closeAddAccountModal()" class="text-slate-400 hover:text-white">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+
+                <form id="addAccountForm" onsubmit="handleAddAccount(event)">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm text-slate-400 mb-1">Nome da Conta</label>
+                            <input type="text" id="accountName" required class="custom-input w-full px-4 py-3 rounded-xl text-white text-sm" placeholder="Ex: HP 1.0">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm text-slate-400 mb-1">ID MT5 - Fase 1</label>
+                            <input type="text" id="accountId" required class="custom-input w-full px-4 py-3 rounded-xl text-white text-sm" placeholder="Ex: 1234567">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm text-slate-400 mb-1">Banca Inicial (U$)</label>
+                            <input type="number" id="initialBalance" required class="custom-input w-full px-4 py-3 rounded-xl text-white text-sm" placeholder="10000">
+                        </div>
+
+                        <!-- Drawdown Limits -->
+                        <div class="p-4 rounded-xl bg-white/5 border border-white/10">
+                            <p class="text-sm font-medium text-white mb-3">Limites de Drawdown</p>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-xs text-slate-400 mb-1">Diário (%)</label>
+                                    <input type="number" id="dailyDrawdownLimit" value="4.5" step="0.1" class="custom-input w-full px-3 py-2 rounded-lg text-white text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-400 mb-1">Total (%)</label>
+                                    <input type="number" id="totalDrawdownLimit" value="10" step="0.1" class="custom-input w-full px-3 py-2 rounded-lg text-white text-sm">
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-2">Padrão Prop Firm: 4.5% diário / 10% total</p>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-sm text-slate-400 mb-1">Meta Fase 1 (%)</label>
+                                <input type="number" id="goal1" value="8" step="0.1" class="custom-input w-full px-4 py-3 rounded-xl text-white text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm text-slate-400 mb-1">Meta Fase 2 (%)</label>
+                                <input type="number" id="goal2" value="5" step="0.1" class="custom-input w-full px-4 py-3 rounded-xl text-white text-sm">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 flex gap-3">
+                        <button type="button" onclick="closeAddAccountModal()" class="flex-1 px-4 py-3 rounded-xl border border-white/10 hover:bg-white/5 text-sm text-slate-300 transition-colors">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="flex-1 btn-primary px-4 py-3 rounded-xl text-sm font-medium">
+                            Criar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Drawdown Settings Modal -->
+    <div id="drawdownSettingsModal" class="fixed inset-0 z-50 hidden">
+        <div class="modal-backdrop absolute inset-0" onclick="closeDrawdownSettings()"></div>
+        <div class="relative min-h-screen flex items-center justify-center p-4">
+            <div class="glass-card w-full max-w-md rounded-2xl p-6 relative z-10">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-bold text-white">Configurar Limites de Drawdown</h3>
+                    <button onclick="closeDrawdownSettings()" class="text-slate-400 hover:text-white">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="p-4 rounded-xl bg-yellow-500/10 border border-yellow-500/20">
+                        <p class="text-sm text-yellow-300 mb-2">⚠️ Padrão Prop Firm</p>
+                        <p class="text-xs text-slate-400">A maioria das Prop Firms usa 4.5% de drawdown diário e 10% total. Ajuste conforme suas regras específicas.</p>
+                    </div>
+
+                    <div id="drawdownSettingsList" class="space-y-3">
+                        <!-- Settings per account will be rendered here -->
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <button onclick="closeDrawdownSettings()" class="w-full btn-primary px-4 py-3 rounded-xl text-sm font-medium">
+                        Fechar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Drawdown Modal -->
+    <div id="editDrawdownModal" class="fixed inset-0 z-50 hidden">
+        <div class="modal-backdrop absolute inset-0" onclick="closeEditDrawdown()"></div>
+        <div class="relative min-h-screen flex items-center justify-center p-4">
+            <div class="glass-card w-full max-w-sm rounded-2xl p-6 relative z-10">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-bold text-white">Editar Limites</h3>
+                    <button onclick="closeEditDrawdown()" class="text-slate-400 hover:text-white">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+
+                <form id="editDrawdownForm" onsubmit="handleEditDrawdown(event)">
+                    <input type="hidden" id="editDrawdownAccountIndex">
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm text-slate-400 mb-1">Drawdown Diário (%)</label>
+                            <input type="number" id="editDailyDrawdown" step="0.1" min="0.1" max="100" class="custom-input w-full px-4 py-3 rounded-xl text-white text-sm">
+                            <p class="text-xs text-slate-500 mt-1">Ex: 4.5% = Limite de perda diária</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-slate-400 mb-1">Drawdown Total (%)</label>
+                            <input type="number" id="editTotalDrawdown" step="0.1" min="0.1" max="100" class="custom-input w-full px-4 py-3 rounded-xl text-white text-sm">
+                            <p class="text-xs text-slate-500 mt-1">Ex: 10% = Limite máximo de perda total</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 flex gap-3">
+                        <button type="button" onclick="closeEditDrawdown()" class="flex-1 px-4 py-3 rounded-xl border border-white/10 hover:bg-white/5 text-sm text-slate-300">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="flex-1 btn-success px-4 py-3 rounded-xl text-sm font-medium">
+                            Salvar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Promote Modal -->
+    <div id="promoteModal" class="fixed inset-0 z-50 hidden">
+        <div class="modal-backdrop absolute inset-0" onclick="closePromoteModal()"></div>
+        <div class="relative min-h-screen flex items-center justify-center p-4">
+            <div class="glass-card w-full max-w-md rounded-2xl p-6 relative z-10">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-bold text-green-400">Aprovar Fase</h3>
+                    <button onclick="closePromoteModal()" class="text-slate-400 hover:text-white">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+
+                <form id="promoteForm" onsubmit="handlePromote(event)">
+                    <input type="hidden" id="promoteAccountIndex">
+                    
+                    <div class="space-y-4">
+                        <div class="p-3 rounded-xl bg-green-500/10 border border-green-500/20">
+                            <p class="text-sm text-green-300">Parabéns! Vamos configurar a próxima fase.</p>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm text-slate-400 mb-1">Próxima Fase</label>
+                            <select id="newPhase" class="custom-input w-full px-4 py-3 rounded-xl text-white text-sm bg-slate-800">
+                                <option value="fase2">Fase 2</option>
+                                <option value="funded">Funded</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm text-slate-400 mb-1">Novo ID MT5</label>
+                            <input type="text" id="newAccountId" required class="custom-input w-full px-4 py-3 rounded-xl text-white text-sm" placeholder="Novo número da conta">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm text-slate-400 mb-1">Banca Inicial Nova Fase</label>
+                            <input type="number" id="newInitialBalance" required class="custom-input w-full px-4 py-3 rounded-xl text-white text-sm" placeholder="Ex: 10000">
+                        </div>
+
+                        <!-- Drawdown limits for new phase -->
+                        <div class="p-3 rounded-xl bg-white/5 border border-white/10">
+                            <p class="text-sm text-slate-300 mb-2">Limites Drawdown Nova Fase</p>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-xs text-slate-400 mb-1">Diário (%)</label>
+                                    <input type="number" id="newDailyDrawdown" value="4.5" step="0.1" class="custom-input w-full px-3 py-2 rounded-lg text-white text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-400 mb-1">Total (%)</label>
+                                    <input type="number" id="newTotalDrawdown" value="10" step="0.1" class="custom-input w-full px-3 py-2 rounded-lg text-white text-sm">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm text-slate-400 mb-1">Saldo Final Fase Anterior</label>
+                            <input type="number" id="finalBalancePrev" class="custom-input w-full px-4 py-3 rounded-xl text-white text-sm" placeholder="Automático">
+                        </div>
+                    </div>
+
+                    <div class="mt-6 flex gap-3">
+                        <button type="button" onclick="closePromoteModal()" class="flex-1 px-4 py-3 rounded-xl border border-white/10 hover:bg-white/5 text-sm text-slate-300">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="flex-1 btn-success px-4 py-3 rounded-xl text-sm font-medium">
+                            Confirmar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // ═══════════════════════════════════════════════════════════════
-        // CONFIGURAÇÕES JSONBIN
-        // ═══════════════════════════════════════════════════════════════
+        // ═══════════════════════════════════════════════════════════════════
+        // CONFIGURAÇÕES JSONBIN.IO
+        // ═══════════════════════════════════════════════════════════════════
         const JSONBIN_URL = 'https://api.jsonbin.io/v3/b/69c560adaa77b81da9219078/latest';
-        const JSONBIN_KEY = '$2a$10$7Eq25kZBJrrStjIitBZvjeOMWDZQZ/LEYSQERycefja5cb00698X.';
+        const JSONBIN_MASTER_KEY = '$2a$10$7Eq25kZBJrrStjIitBZvjeOMWDZQZ/LEYSQERycefja5cb00698X.';
         
-        // ═══════════════════════════════════════════════════════════════
-        // FUNÇÕES UTILITÁRIAS
-        // ═══════════════════════════════════════════════════════════════
+        // State
+        let accounts = JSON.parse(localStorage.getItem('hgCapital_drawdown')) || [];
+        let mt5Data = null;
+        let lastFetchTime = null;
+
+        // Default drawdown settings
+        const DEFAULT_DAILY_DRAWDOWN = 4.5;
+        const DEFAULT_TOTAL_DRAWDOWN = 10;
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            render();
+            updateSummary();
+            checkDrawdownAlerts();
+            
+            // Iniciar polling dos dados do MT5
+            fetchMT5Data();
+            setInterval(fetchMT5Data, 10000); // Atualiza a cada 10 segundos
+        });
+
+        // ═══════════════════════════════════════════════════════════════════
+        // FUNÇÕES DE INTEGRAÇÃO COM JSONBIN (MT5)
+        // ═══════════════════════════════════════════════════════════════════
+        
+        async function fetchMT5Data() {
+            try {
+                const response = await fetch(JSONBIN_URL, {
+                    method: 'GET',
+                    headers: {
+                        'X-Master-Key': JSONBIN_MASTER_KEY
+                    }
+                });
+                
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const data = await response.json();
+                mt5Data = data.record;
+                lastFetchTime = new Date();
+                
+                // Atualizar interface com dados do MT5
+                updateFromMT5();
+                updateLastUpdateTime();
+                
+                // Esconder mensagem de "aguardando" se tiver dados
+                if (mt5Data && mt5Data.accounts && mt5Data.accounts.length > 0) {
+                    document.getElementById('connectionStatus').classList.add('hidden');
+                }
+                
+            } catch (error) {
+                console.error('Erro ao buscar dados do MT5:', error);
+                showConnectionError();
+            }
+        }
+
+        function updateFromMT5() {
+            if (!mt5Data || !mt5Data.accounts) return;
+            
+            mt5Data.accounts.forEach(mt5Account => {
+                // Procurar conta correspondente no nosso sistema
+                const localAccount = accounts.find(acc => {
+                    const currentPhase = acc.phasesHistory[acc.phasesHistory.length - 1];
+                    return currentPhase.accountId === mt5Account.accountId;
+                });
+                
+                if (localAccount) {
+                    const currentPhase = localAccount.phasesHistory[localAccount.phasesHistory.length - 1];
+                    
+                    // Atualizar dados da conta com dados do MT5
+                    currentPhase.currentBalance = mt5Account.equity || mt5Account.balance;
+                    currentPhase.dailyPnL = mt5Account.dailyProfit || 0;
+                    
+                    // Calcular drawdown se não vier do MT5
+                    if (mt5Account.drawdown !== undefined) {
+                        currentPhase.currentDrawdown = mt5Account.drawdown;
+                    }
+                    
+                    // Atualizar timestamp
+                    currentPhase.lastUpdate = mt5Account.timestamp || new Date().toISOString();
+                }
+            });
+            
+            save();
+            render();
+            updateSummary();
+            checkDrawdownAlerts();
+        }
+
+        function updateLastUpdateTime() {
+            if (lastFetchTime) {
+                const timeStr = lastFetchTime.toLocaleTimeString('pt-BR');
+                document.getElementById('lastUpdate').textContent = `Atualizado: ${timeStr}`;
+            }
+        }
+
+        function showConnectionError() {
+            const statusEl = document.getElementById('connectionStatus');
+            statusEl.classList.remove('hidden');
+            statusEl.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <div>
+                        <p class="text-sm font-medium text-red-400">Erro de conexão com MT5</p>
+                        <p class="text-xs text-slate-400">Verifique se o EA está rodando no MetaTrader</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Format currency
         function formatCurrency(value) {
             return new Intl.NumberFormat('en-US', {
                 style: 'currency',
                 currency: 'USD'
             }).format(value || 0);
         }
-        
-        function formatTime(timestamp) {
-            if (!timestamp) return '--:--';
-            const date = new Date(timestamp);
-            return date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+        // Get phase badge
+        function getPhaseBadge(phase) {
+            const badges = {
+                'fase1': '<span class="phase-badge badge-fase1">Fase 1</span>',
+                'fase2': '<span class="phase-badge badge-fase2">Fase 2</span>',
+                'funded': '<span class="phase-badge badge-funded">Funded</span>'
+            };
+            return badges[phase] || phase;
         }
-        
-        // ═══════════════════════════════════════════════════════════════
-        // FETCH DATA FROM JSONBIN
-        // ═══════════════════════════════════════════════════════════════
-        async function fetchData() {
-            try {
-                const response = await fetch(JSONBIN_URL, {
-                    headers: { 'X-Master-Key': JSONBIN_KEY }
-                });
-                
-                if (!response.ok) throw new Error('HTTP ' + response.status);
-                
-                const result = await response.json();
-                const data = result.record;
-                
-                updateDashboard(data);
-                
-            } catch (error) {
-                console.error('Erro ao buscar dados:', error);
-                document.getElementById('lastUpdate').textContent = 'Erro de conexão';
-            }
+
+        // Calculate drawdown metrics
+        function calculateDrawdown(currentBalance, initialBalance, dailyLimit, totalLimit) {
+            const dailyLimitValue = initialBalance * (dailyLimit / 100);
+            const totalLimitValue = initialBalance * (totalLimit / 100);
+            
+            const currentDrawdown = Math.max(0, initialBalance - currentBalance);
+            const currentDrawdownPercent = initialBalance > 0 ? (currentDrawdown / initialBalance) * 100 : 0;
+            
+            const dailyRemaining = dailyLimitValue - currentDrawdown;
+            const totalRemaining = totalLimitValue - currentDrawdown;
+            
+            const dailyUsedPercent = dailyLimitValue > 0 ? Math.min((currentDrawdown / dailyLimitValue) * 100, 100) : 0;
+            const totalUsedPercent = totalLimitValue > 0 ? Math.min((currentDrawdown / totalLimitValue) * 100, 100) : 0;
+            
+            // Determine status
+            let status = 'safe';
+            if (dailyUsedPercent >= 80 || totalUsedPercent >= 80) status = 'danger';
+            else if (dailyUsedPercent >= 50 || totalUsedPercent >= 50) status = 'warning';
+            
+            return {
+                currentDrawdown,
+                currentDrawdownPercent,
+                dailyRemaining,
+                totalRemaining,
+                dailyUsedPercent,
+                totalUsedPercent,
+                dailyLimitValue,
+                totalLimitValue,
+                status
+            };
         }
-        
-        // ═══════════════════════════════════════════════════════════════
-        // UPDATE DASHBOARD
-        // ═══════════════════════════════════════════════════════════════
-        function updateDashboard(data) {
-            const accounts = data.accounts || [];
-            
-            // Hide loading
-            document.getElementById('loading').classList.add('hidden');
-            
-            // Calculate totals
-            let totalBalance = 0;
-            let totalDaily = 0;
-            let totalProfit = 0;
-            let maxDrawdown = 0;
+
+        // Check for drawdown alerts
+        function checkDrawdownAlerts() {
+            let alertAccount = null;
+            let maxRisk = 0;
             
             accounts.forEach(acc => {
-                totalBalance += acc.equity || acc.balance || 0;
-                totalDaily += acc.dailyProfit || 0;
-                totalProfit += acc.profit || 0;
-                if (acc.drawdown > maxDrawdown) maxDrawdown = acc.drawdown;
+                const current = acc.phasesHistory[acc.phasesHistory.length - 1];
+                const currentBalance = current.currentBalance || current.initialBalance;
+                const dd = calculateDrawdown(
+                    currentBalance,
+                    current.initialBalance,
+                    current.dailyDrawdownLimit || DEFAULT_DAILY_DRAWDOWN,
+                    current.totalDrawdownLimit || DEFAULT_TOTAL_DRAWDOWN
+                );
+                
+                if (dd.status === 'danger' && dd.dailyUsedPercent > maxRisk) {
+                    maxRisk = dd.dailyUsedPercent;
+                    alertAccount = acc.name;
+                }
             });
             
-            // Update summary cards
-            document.getElementById('totalBalance').textContent = formatCurrency(totalBalance);
+            const alertBanner = document.getElementById('drawdownAlert');
+            if (alertAccount) {
+                alertBanner.classList.remove('hidden');
+                document.getElementById('drawdownAlertText').textContent = `A conta ${alertAccount} está próxima do limite de perda!`;
+            } else {
+                alertBanner.classList.add('hidden');
+            }
+        }
+
+        // Calculate progress to goal
+        function calcProgress(current, initial, targetPercent) {
+            if (!targetPercent || initial === 0) return 0;
+            const profit = current - initial;
+            const target = initial * (targetPercent / 100);
+            return Math.min(Math.max((profit / target) * 100, 0), 100);
+        }
+
+        // Update global summary
+        function updateSummary() {
+            const fundedAccounts = accounts.filter(a => a.currentPhase === 'funded');
             
-            const dailyEl = document.getElementById('totalDaily');
-            dailyEl.textContent = (totalDaily >= 0 ? '+' : '') + formatCurrency(totalDaily);
-            dailyEl.className = 'text-2xl font-bold font-display ' + (totalDaily >= 0 ? 'pnl-positive' : 'pnl-negative');
+            const totalFunded = fundedAccounts.reduce((sum, a) => {
+                const current = a.phasesHistory.find(p => p.phase === 'funded');
+                return sum + (current?.currentBalance || current?.initialBalance || 0);
+            }, 0);
+
+            const dailyPnL = accounts.reduce((sum, a) => {
+                const current = a.phasesHistory[a.phasesHistory.length - 1];
+                return sum + (current?.dailyPnL || 0);
+            }, 0);
+
+            const monthlyProfit = accounts.reduce((sum, a) => {
+                return sum + (a.monthlyProfit || 0);
+            }, 0);
+
+            const availableWithdraw = fundedAccounts.reduce((sum, a) => {
+                const current = a.phasesHistory.find(p => p.phase === 'funded');
+                const profit = (current?.currentBalance || current?.initialBalance || 0) - (current?.initialBalance || 0);
+                return sum + (profit > 0 ? profit * 0.8 : 0); // 80% disponível para saque
+            }, 0);
+
+            document.getElementById('totalFundedBalance').textContent = formatCurrency(totalFunded);
             
-            document.getElementById('totalProfit').textContent = (totalProfit >= 0 ? '+' : '') + formatCurrency(totalProfit);
+            const dailyEl = document.getElementById('totalDailyPnL');
+            dailyEl.textContent = (dailyPnL >= 0 ? '+' : '') + formatCurrency(dailyPnL);
+            dailyEl.className = 'text-2xl font-bold font-display ' + (dailyPnL >= 0 ? 'pnl-positive' : 'pnl-negative');
             
-            const ddEl = document.getElementById('maxDrawdown');
-            ddEl.textContent = maxDrawdown.toFixed(2) + '%';
-            ddEl.className = 'text-2xl font-bold font-display ' + 
-                (maxDrawdown > 4 ? 'drawdown-danger' : maxDrawdown > 2 ? 'drawdown-warning' : 'drawdown-safe');
+            document.getElementById('totalMonthlyProfit').textContent = formatCurrency(monthlyProfit);
+            document.getElementById('totalAvailableWithdraw').textContent = formatCurrency(availableWithdraw);
+        }
+
+        // Toggle expand history (only for funded)
+        function toggleHistory(accountId) {
+            const account = accounts.find(a => a.id === accountId);
+            if (!account || account.currentPhase !== 'funded') return;
             
-            // Update accounts list
+            account.isExpanded = !account.isExpanded;
+            save();
+            render();
+        }
+
+        // Render drawdown bar
+        function renderDrawdownBar(usedPercent, status) {
+            let fillClass = 'drawdown-safe-fill';
+            if (status === 'warning') fillClass = 'drawdown-warning-fill';
+            if (status === 'danger') fillClass = 'drawdown-danger-fill';
+            
+            return `
+                <div class="drawdown-bar-bg">
+                    <div class="drawdown-bar-fill ${fillClass}" style="width: ${usedPercent}%"></div>
+                </div>
+            `;
+        }
+
+        // Render accounts
+        function render() {
             const container = document.getElementById('accountsList');
+            const empty = document.getElementById('emptyState');
             
             if (accounts.length === 0) {
-                container.innerHTML = `
-                    <div class="text-center py-12">
-                        <p class="text-slate-500">Nenhuma conta conectada</p>
-                        <p class="text-sm text-slate-600 mt-1">Verifique se o EA está rodando no MT5</p>
-                    </div>
-                `;
+                container.innerHTML = '';
+                empty.classList.remove('hidden');
                 return;
             }
             
-            container.innerHTML = accounts.map(acc => {
-                const dailyClass = acc.dailyProfit >= 0 ? 'pnl-positive' : 'pnl-negative';
-                const ddClass = acc.drawdown > 4 ? 'drawdown-danger' : acc.drawdown > 2 ? 'drawdown-warning' : 'drawdown-safe';
+            empty.classList.add('hidden');
+            
+            container.innerHTML = accounts.map((acc, idx) => {
+                const currentPhase = acc.phasesHistory[acc.phasesHistory.length - 1];
+                const isFunded = acc.currentPhase === 'funded';
+                const isExpanded = acc.isExpanded && isFunded;
+                const currentBalance = currentPhase.currentBalance || currentPhase.initialBalance;
                 
-                return `
-                    <div class="glass-card rounded-2xl p-5">
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                                    <span class="font-bold text-blue-400">${acc.name?.charAt(0) || 'A'}</span>
+                // Calculate drawdown
+                const dd = calculateDrawdown(
+                    currentBalance,
+                    currentPhase.initialBalance,
+                    currentPhase.dailyDrawdownLimit || DEFAULT_DAILY_DRAWDOWN,
+                    currentPhase.totalDrawdownLimit || DEFAULT_TOTAL_DRAWDOWN
+                );
+                
+                let mainContent = '';
+                
+                if (isFunded && !isExpanded) {
+                    // FUNDED COMPACT VIEW
+                    const fundedPhase = acc.phasesHistory.find(p => p.phase === 'funded');
+                    const profit = (fundedPhase.currentBalance || fundedPhase.initialBalance) - fundedPhase.initialBalance;
+                    
+                    mainContent = `
+                        <div class="flex items-center justify-between p-5">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-600/20 flex items-center justify-center border border-purple-500/30">
+                                    <span class="text-lg font-bold text-purple-400">${acc.name.charAt(0)}</span>
                                 </div>
                                 <div>
-                                    <h3 class="font-semibold text-white">${acc.name || 'Conta'}</h3>
-                                    <p class="text-xs text-slate-400">ID: ${acc.accountId}</p>
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <h3 class="text-lg font-semibold text-white">${acc.name}</h3>
+                                        ${getPhaseBadge('funded')}
+                                    </div>
+                                    <p class="text-xs text-slate-400">ID: ${fundedPhase.accountId}</p>
                                 </div>
                             </div>
-                            <div class="text-right">
-                                <p class="text-xs text-slate-500">Atualizado</p>
-                                <p class="text-xs text-slate-400">${formatTime(acc.timestamp)}</p>
+                            
+                            <div class="flex items-center gap-6">
+                                <div class="text-right">
+                                    <p class="text-xs text-slate-500 mb-1">Banca</p>
+                                    <p class="text-xl font-bold text-white">${formatCurrency(fundedPhase.currentBalance || fundedPhase.initialBalance)}</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-xs text-slate-500 mb-1">Hoje</p>
+                                    <p class="text-lg font-bold ${(fundedPhase.dailyPnL || 0) >= 0 ? 'pnl-positive' : 'pnl-negative'}">
+                                        ${(fundedPhase.dailyPnL || 0) >= 0 ? '+' : ''}${formatCurrency(fundedPhase.dailyPnL || 0)}
+                                    </p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-xs text-slate-500 mb-1">Lucro Total</p>
+                                    <p class="text-lg font-bold ${profit >= 0 ? 'pnl-positive' : 'pnl-negative'}">
+                                        ${profit >= 0 ? '+' : ''}${formatCurrency(profit)}
+                                    </p>
+                                </div>
+                                <button onclick="toggleHistory('${acc.id}')" class="p-2 btn-ghost rounded-lg expand-btn ${isExpanded ? 'rotated' : ''}" title="Ver histórico">
+                                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                </button>
                             </div>
                         </div>
-                        
-                        <div class="grid grid-cols-4 gap-4">
-                            <div>
-                                <p class="text-xs text-slate-500 mb-1">Banca</p>
-                                <p class="text-lg font-semibold text-white">${formatCurrency(acc.equity || acc.balance)}</p>
+                    `;
+                } else {
+                    // NORMAL VIEW WITH DRAWDOWN
+                    const progress = calcProgress(currentBalance, currentPhase.initialBalance, currentPhase.goalPercent);
+                    const profit = currentBalance - currentPhase.initialBalance;
+                    
+                    // Verificar se tem dados ao vivo do MT5
+                    const hasLiveData = currentPhase.lastUpdate && 
+                        (new Date() - new Date(currentPhase.lastUpdate)) < 60000; // Dados de menos de 1 minuto
+                    
+                    mainContent = `
+                        <div class="p-5">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/20 flex items-center justify-center relative">
+                                        <span class="font-bold text-blue-400">${acc.name.charAt(0)}</span>
+                                        ${hasLiveData ? '<span class="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-slate-900"></span>' : ''}
+                                    </div>
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <h3 class="font-semibold text-white">${acc.name}</h3>
+                                            ${getPhaseBadge(currentPhase.phase)}
+                                            ${hasLiveData ? '<span class="text-xs text-green-400 flex items-center gap-1"><span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>Live</span>' : ''}
+                                        </div>
+                                        <p class="text-xs text-slate-400">ID: ${currentPhase.accountId}</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    ${currentPhase.status === 'active' && !isFunded ? `
+                                        <button onclick="openPromoteModal(${idx})" class="btn-success px-3 py-1.5 rounded-lg text-xs font-medium">
+                                            Aprovar
+                                        </button>
+                                    ` : ''}
+                                    <button onclick="openEditDrawdownModal(${idx})" class="p-2 btn-ghost rounded-lg" title="Editar Drawdown">
+                                        <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                                    </button>
+                                    <button onclick="deleteAccount(${idx})" class="p-2 text-slate-500 hover:text-red-400 transition-colors">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                    </button>
+                                    ${isFunded ? `
+                                        <button onclick="toggleHistory('${acc.id}')" class="p-2 btn-ghost rounded-lg expand-btn ${isExpanded ? 'rotated' : ''}">
+                                            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                        </button>
+                                    ` : ''}
+                                </div>
                             </div>
-                            <div>
-                                <p class="text-xs text-slate-500 mb-1">Hoje</p>
-                                <p class="text-lg font-semibold ${dailyClass}">
-                                    ${acc.dailyProfit >= 0 ? '+' : ''}${formatCurrency(acc.dailyProfit)}
-                                </p>
+                            
+                            <div class="grid grid-cols-4 gap-4 mb-4">
+                                <div>
+                                    <p class="text-xs text-slate-500 mb-1">Banca</p>
+                                    <p class="text-lg font-semibold text-white">${formatCurrency(currentBalance)}</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-500 mb-1">Hoje</p>
+                                    <p class="text-lg font-semibold ${(currentPhase.dailyPnL || 0) >= 0 ? 'pnl-positive' : 'pnl-negative'}">
+                                        ${(currentPhase.dailyPnL || 0) >= 0 ? '+' : ''}${formatCurrency(currentPhase.dailyPnL || 0)}
+                                    </p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-500 mb-1">Lucro Total</p>
+                                    <p class="text-lg font-semibold ${profit >= 0 ? 'pnl-positive' : 'pnl-negative'}">
+                                        ${profit >= 0 ? '+' : ''}${formatCurrency(profit)}
+                                    </p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-500 mb-1">DD Atual</p>
+                                    <p class="text-lg font-semibold ${dd.status === 'danger' ? 'drawdown-danger' : dd.status === 'warning' ? 'drawdown-warning' : 'drawdown-safe'}">
+                                        ${dd.currentDrawdownPercent.toFixed(2)}%
+                                    </p>
+                                </div>
                             </div>
-                            <div>
-                                <p class="text-xs text-slate-500 mb-1">Lucro</p>
-                                <p class="text-lg font-semibold ${acc.profit >= 0 ? 'pnl-positive' : 'pnl-negative'}">
-                                    ${acc.profit >= 0 ? '+' : ''}${formatCurrency(acc.profit)}
-                                </p>
+                            
+                            <!-- Drawdown Section -->
+                            <div class="grid grid-cols-2 gap-4 mb-4 p-3 rounded-xl bg-white/5 border border-white/10">
+                                <div>
+                                    <div class="flex justify-between text-xs mb-2">
+                                        <span class="text-slate-400">Drawdown Diário (Limite: ${currentPhase.dailyDrawdownLimit || DEFAULT_DAILY_DRAWDOWN}%)</span>
+                                        <span class="${dd.status === 'danger' ? 'drawdown-danger' : dd.status === 'warning' ? 'drawdown-warning' : 'drawdown-safe'}">
+                                            ${dd.dailyUsedPercent.toFixed(1)}% usado
+                                        </span>
+                                    </div>
+                                    ${renderDrawdownBar(dd.dailyUsedPercent, dd.status)}
+                                    <p class="text-xs text-slate-500 mt-1">
+                                        Pode perder: ${formatCurrency(dd.dailyRemaining)} hoje
+                                    </p>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-xs mb-2">
+                                        <span class="text-slate-400">Drawdown Total (Limite: ${currentPhase.totalDrawdownLimit || DEFAULT_TOTAL_DRAWDOWN}%)</span>
+                                        <span class="${dd.totalUsedPercent >= 80 ? 'drawdown-danger' : dd.totalUsedPercent >= 50 ? 'drawdown-warning' : 'drawdown-safe'}">
+                                            ${dd.totalUsedPercent.toFixed(1)}% usado
+                                        </span>
+                                    </div>
+                                    ${renderDrawdownBar(dd.totalUsedPercent, dd.totalUsedPercent >= 80 ? 'danger' : dd.totalUsedPercent >= 50 ? 'warning' : 'safe')}
+                                    <p class="text-xs text-slate-500 mt-1">
+                                        Máximo restante: ${formatCurrency(dd.totalRemaining)}
+                                    </p>
+                                </div>
                             </div>
-                            <div>
-                                <p class="text-xs text-slate-500 mb-1">Drawdown</p>
-                                <p class="text-lg font-semibold ${ddClass}">${acc.drawdown?.toFixed(2) || '0.00'}%</p>
+                            
+                            ${currentPhase.goalPercent ? `
+                                <div class="mb-2">
+                                    <div class="flex justify-between text-xs mb-2">
+                                        <span class="text-slate-400">Progresso para ${currentPhase.goalPercent}%</span>
+                                        <span class="${progress >= 100 ? 'text-green-400' : 'text-blue-400'}">${progress.toFixed(1)}%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill bg-gradient-to-r from-blue-500 to-purple-500" style="width: ${progress}%"></div>
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                }
+                
+                // History section (only for funded when expanded)
+                let historyContent = '';
+                if (isFunded && isExpanded) {
+                    const historyPhases = acc.phasesHistory.filter(p => p.phase !== 'funded');
+                    historyContent = `
+                        <div class="history-section expanded border-t border-white/5">
+                            <div class="p-5 bg-black/20">
+                                <h4 class="text-sm font-medium text-slate-400 mb-3 uppercase tracking-wider">Histórico de Fases</h4>
+                                <div class="space-y-3">
+                                    ${historyPhases.map(phase => {
+                                        const phaseProfit = (phase.finalBalance || phase.initialBalance) - phase.initialBalance;
+                                        return `
+                                            <div class="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/5">
+                                                <div class="flex items-center gap-3">
+                                                    ${getPhaseBadge(phase.phase)}
+                                                    <div>
+                                                        <p class="text-sm text-white">ID: ${phase.accountId}</p>
+                                                        <p class="text-xs text-slate-500">${new Date(phase.startDate).toLocaleDateString('pt-BR')} - ${phase.endDate ? new Date(phase.endDate).toLocaleDateString('pt-BR') : '...'}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="text-right">
+                                                    <p class="text-sm font-medium ${phaseProfit >= 0 ? 'pnl-positive' : 'pnl-negative'}">
+                                                        ${phaseProfit >= 0 ? '+' : ''}${formatCurrency(phaseProfit)}
+                                                    </p>
+                                                    <p class="text-xs text-slate-500">Meta: ${phase.goalPercent}%</p>
+                                                </div>
+                                            </div>
+                                        `;
+                                    }).join('')}
+                                </div>
                             </div>
                         </div>
-                        
-                        ${acc.positions > 0 ? `
-                            <div class="mt-3 pt-3 border-t border-white/5">
-                                <p class="text-xs text-slate-400">
-                                    📊 ${acc.positions} posição(ões) aberta(s) | 
-                                    Margem: ${formatCurrency(acc.margin)} | 
-                                    Livre: ${formatCurrency(acc.marginFree)}
-                                </p>
-                            </div>
-                        ` : ''}
+                    `;
+                }
+                
+                return `
+                    <div class="account-card rounded-2xl fade-in" style="animation-delay: ${idx * 0.1}s">
+                        ${mainContent}
+                        ${historyContent}
                     </div>
                 `;
             }).join('');
-            
-            // Update last update time
-            const now = new Date();
-            document.getElementById('lastUpdate').textContent = 
-                'Atualizado: ' + now.toLocaleTimeString('pt-BR');
         }
-        
-        // ═══════════════════════════════════════════════════════════════
-        // INICIALIZAR
-        // ═══════════════════════════════════════════════════════════════
-        fetchData(); // Primeira carga
-        setInterval(fetchData, 30000); // Atualizar a cada 30 segundos
+
+        // Handle add account
+        function handleAddAccount(e) {
+            e.preventDefault();
+            
+            const initialBalance = parseFloat(document.getElementById('initialBalance').value) || 10000;
+            
+            const newAccount = {
+                id: Date.now().toString(),
+                name: document.getElementById('accountName').value,
+                currentPhase: 'fase1',
+                isExpanded: false,
+                monthlyProfit: 0,
+                phasesHistory: [{
+                    phase: 'fase1',
+                    accountId: document.getElementById('accountId').value,
+                    startDate: new Date().toISOString(),
+                    endDate: null,
+                    initialBalance: initialBalance,
+                    currentBalance: initialBalance,
+                    goalPercent: parseFloat(document.getElementById('goal1').value) || 8,
+                    dailyDrawdownLimit: parseFloat(document.getElementById('dailyDrawdownLimit').value) || DEFAULT_DAILY_DRAWDOWN,
+                    totalDrawdownLimit: parseFloat(document.getElementById('totalDrawdownLimit').value) || DEFAULT_TOTAL_DRAWDOWN,
+                    status: 'active',
+                    dailyPnL: 0,
+                    lastUpdate: null
+                }]
+            };
+            
+            accounts.push(newAccount);
+            save();
+            render();
+            updateSummary();
+            checkDrawdownAlerts();
+            closeAddAccountModal();
+            document.getElementById('addAccountForm').reset();
+        }
+
+        // Open drawdown settings
+        function openDrawdownSettings() {
+            const list = document.getElementById('drawdownSettingsList');
+            list.innerHTML = accounts.map((acc, idx) => {
+                const current = acc.phasesHistory[acc.phasesHistory.length - 1];
+                return `
+                    <div class="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10">
+                        <div>
+                            <p class="text-sm font-medium text-white">${acc.name}</p>
+                            <p class="text-xs text-slate-400">${getPhaseBadge(current.phase)}</p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="text-right">
+                                <p class="text-xs text-slate-500">Diário: ${current.dailyDrawdownLimit || DEFAULT_DAILY_DRAWDOWN}%</p>
+                                <p class="text-xs text-slate-500">Total: ${current.totalDrawdownLimit || DEFAULT_TOTAL_DRAWDOWN}%</p>
+                            </div>
+                            <button onclick="openEditDrawdownModal(${idx})" class="p-2 btn-ghost rounded-lg">
+                                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('') || '<p class="text-sm text-slate-500 text-center">Nenhuma conta configurada</p>';
+            
+            document.getElementById('drawdownSettingsModal').classList.remove('hidden');
+        }
+
+        function closeDrawdownSettings() {
+            document.getElementById('drawdownSettingsModal').classList.add('hidden');
+        }
+
+        // Open edit drawdown modal
+        function openEditDrawdownModal(idx) {
+            const acc = accounts[idx];
+            const current = acc.phasesHistory[acc.phasesHistory.length - 1];
+            
+            document.getElementById('editDrawdownAccountIndex').value = idx;
+            document.getElementById('editDailyDrawdown').value = current.dailyDrawdownLimit || DEFAULT_DAILY_DRAWDOWN;
+            document.getElementById('editTotalDrawdown').value = current.totalDrawdownLimit || DEFAULT_TOTAL_DRAWDOWN;
+            
+            closeDrawdownSettings();
+            document.getElementById('editDrawdownModal').classList.remove('hidden');
+        }
+
+        function closeEditDrawdown() {
+            document.getElementById('editDrawdownModal').classList.add('hidden');
+        }
+
+        // Handle edit drawdown
+        function handleEditDrawdown(e) {
+            e.preventDefault();
+            
+            const idx = parseInt(document.getElementById('editDrawdownAccountIndex').value);
+            const acc = accounts[idx];
+            const current = acc.phasesHistory[acc.phasesHistory.length - 1];
+            
+            current.dailyDrawdownLimit = parseFloat(document.getElementById('editDailyDrawdown').value) || DEFAULT_DAILY_DRAWDOWN;
+            current.totalDrawdownLimit = parseFloat(document.getElementById('editTotalDrawdown').value) || DEFAULT_TOTAL_DRAWDOWN;
+            
+            save();
+            render();
+            checkDrawdownAlerts();
+            closeEditDrawdown();
+        }
+
+        // Open promote modal
+        function openPromoteModal(idx) {
+            const acc = accounts[idx];
+            const current = acc.phasesHistory[acc.phasesHistory.length - 1];
+            
+            document.getElementById('promoteAccountIndex').value = idx;
+            document.getElementById('newPhase').value = acc.currentPhase === 'fase1' ? 'fase2' : 'funded';
+            document.getElementById('newInitialBalance').value = current.initialBalance;
+            document.getElementById('newDailyDrawdown').value = current.dailyDrawdownLimit || DEFAULT_DAILY_DRAWDOWN;
+            document.getElementById('newTotalDrawdown').value = current.totalDrawdownLimit || DEFAULT_TOTAL_DRAWDOWN;
+            document.getElementById('finalBalancePrev').value = current.currentBalance || current.initialBalance;
+            
+            document.getElementById('promoteModal').classList.remove('hidden');
+        }
+
+        function closePromoteModal() {
+            document.getElementById('promoteModal').classList.add('hidden');
+        }
+
+        // Handle promote
+        function handlePromote(e) {
+            e.preventDefault();
+            
+            const idx = parseInt(document.getElementById('promoteAccountIndex').value);
+            const acc = accounts[idx];
+            const current = acc.phasesHistory[acc.phasesHistory.length - 1];
+            
+            current.endDate = new Date().toISOString();
+            current.finalBalance = parseFloat(document.getElementById('finalBalancePrev').value) || current.currentBalance;
+            current.status = 'approved';
+            
+            const newPhase = document.getElementById('newPhase').value;
+            const newBalance = parseFloat(document.getElementById('newInitialBalance').value);
+            
+            acc.phasesHistory.push({
+                phase: newPhase,
+                accountId: document.getElementById('newAccountId').value,
+                startDate: new Date().toISOString(),
+                endDate: null,
+                initialBalance: newBalance,
+                currentBalance: newBalance,
+                goalPercent: newPhase === 'funded' ? null : (newPhase === 'fase2' ? (acc.phasesHistory[0].goal2 || 5) : 8),
+                dailyDrawdownLimit: parseFloat(document.getElementById('newDailyDrawdown').value) || DEFAULT_DAILY_DRAWDOWN,
+                totalDrawdownLimit: parseFloat(document.getElementById('newTotalDrawdown').value) || DEFAULT_TOTAL_DRAWDOWN,
+                status: 'active',
+                dailyPnL: 0,
+                lastUpdate: null
+            });
+            
+            acc.currentPhase = newPhase;
+            
+            save();
+            render();
+            updateSummary();
+            checkDrawdownAlerts();
+            closePromoteModal();
+        }
+
+        // Delete account
+        function deleteAccount(idx) {
+            if (confirm('Excluir esta conta e todo seu histórico?')) {
+                accounts.splice(idx, 1);
+                save();
+                render();
+                updateSummary();
+                checkDrawdownAlerts();
+            }
+        }
+
+        // Save
+        function save() {
+            localStorage.setItem('hgCapital_drawdown', JSON.stringify(accounts));
+        }
+
+        // Modal controls
+        function openAddAccountModal() {
+            document.getElementById('addAccountModal').classList.remove('hidden');
+        }
+
+        function closeAddAccountModal() {
+            document.getElementById('addAccountModal').classList.add('hidden');
+        }
+
+        // Close on escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeAddAccountModal();
+                closePromoteModal();
+                closeDrawdownSettings();
+                closeEditDrawdown();
+            }
+        });
     </script>
 </body>
 </html>
